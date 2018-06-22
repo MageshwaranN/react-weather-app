@@ -15,18 +15,35 @@ const Navigation = ({ sessionStore }) =>
   </div>
 
 const NavigationAuth = () =>
-  <ul>
-    <li><Link to={routes.LANDING}>Landing</Link></li>
-    <li><Link to={routes.HOME}>Home</Link></li>
-    <li><Link to={routes.ACCOUNT}>Account</Link></li>
-    <li><SignOutButton /></li>
-  </ul>
+<nav className="navbar navbar-expand-lg navbar-light bg-light">
+<Link className="navbar-brand" to={routes.HOME}>Home</Link>
+  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span className="navbar-toggler-icon"></span>
+  </button>
+  <div className="collapse navbar-collapse" id="navbarText">
+    <ul className="navbar-nav mr-auto">
+      <li className="nav-item">
+      <Link className="nav-link" to={routes.LANDING}>Landing</Link>
+      </li>
+      <li className="nav-item">
+      <Link className="nav-link" to={routes.ACCOUNT}>Account</Link>
+      </li>
+      <li className="nav-item">
+      <SignOutButton/>      
+      </li>
+    </ul>
+  </div>
+</nav>
 
 const NavigationNonAuth = () =>
-  <ul>
-    <li><Link to={routes.LANDING}>Landing</Link></li>
-    <li><Link to={routes.SIGN_IN}>Sign In</Link></li>
-  </ul>
+<nav className="navbar navbar-expand-lg navbar-light bg-light">
+<Link className="navbar-brand" to={routes.LANDING}>Landing</Link>
+    <ul className="navbar-nav mr-auto">
+      <li className="nav-item">
+      <Link className="nav-link" to={routes.SIGN_IN}>Sign In</Link>
+      </li>
+    </ul>
+</nav>
 
 export default compose(
   inject('sessionStore'),
