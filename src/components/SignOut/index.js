@@ -3,8 +3,8 @@ import React from 'react';
 import { auth } from '../../firebase';
 
 const SignOutButton = () =>
-  <a className="nav-link pull-right" href="" onClick={auth.doSignOut}>
+  <button className="btn btn-outline-danger my-2 my-sm-0" onClick={auth.doSignOut}>
     Sign Out
-  </a>
+  </button>
 
 export default SignOutButton;
