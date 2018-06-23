@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
-import {
-  Link,
-  withRouter,
-} from 'react-router-dom';
+import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
 
-import { auth, db } from '../../firebase';
-import * as routes from '../../constants/routes';
+import { auth, db } from "../../firebase";
+import * as routes from "../../constants/routes";
 
-const SignUpPage = ({ history }) =>
+const SignUpPage = ({ history }) => (
   <div>
-    <h1>SignUp</h1>
+    <h1>Sign Up</h1>
     <SignUpForm history={history} />
   </div>
+);
 
 const updateByPropertyName = (propertyName, value) => () => ({
-  [propertyName]: value,
+  [propertyName]: value
 });
 
 const INITIAL_STATE = {
-  username: '',
-  email: '',
-  passwordOne: '',
-  passwordTwo: '',
-  error: null,
+  username: "",
+  email: "",
+  passwordOne: "",
+  passwordTwo: "",
+  error: null
 };
 
 class SignUpForm extends Component {
@@ -32,20 +30,14 @@ class SignUpForm extends Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  onSubmit = (event) => {
-    const {
-      username,
-      email,
-      passwordOne,
-    } = this.state;
+  onSubmit = event => {
+    const { username, email, passwordOne } = this.state;
 
-    const {
-      history,
-    } = this.props;
+    const { history } = this.props;
 
-    auth.doCreateUserWithEmailAndPassword(email, passwordOne)
+    auth
+      .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
-
         // Create a user in your own accessible Firebase Database too
         db.doCreateUser(authUser.user.uid, username, email)
           .then(() => {
@@ -53,78 +45,109 @@ class SignUpForm extends Component {
             history.push(routes.HOME);
           })
           .catch(error => {
-            this.setState(updateByPropertyName('error', error));
+            this.setState(updateByPropertyName("error", error));
           });
-
       })
       .catch(error => {
-        this.setState(updateByPropertyName('error', error));
+        this.setState(updateByPropertyName("error", error));
       });
 
     event.preventDefault();
-  }
+  };
 
   render() {
-    const {
-      username,
-      email,
-      passwordOne,
-      passwordTwo,
-      error,
-    } = this.state;
+    const { username, email, passwordOne, passwordTwo, error } = this.state;
 
     const isInvalid =
       passwordOne !== passwordTwo ||
-      passwordOne === '' ||
-      username === '' ||
-      email === '';
+      passwordOne === "" ||
+      username === "" ||
+      email === "";
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input
-          value={username}
-          onChange={event => this.setState(updateByPropertyName('username', event.target.value))}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          value={email}
-          onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          value={passwordOne}
-          onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          value={passwordTwo}
-          onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <button disabled={isInvalid} type="submit">
+        <div className="form-group row">
+          <label className="col-sm-2 col-form-label">Full Name</label>
+          <div className="col-sm-10">
+            <input
+              className="form-control"
+              value={username}
+              onChange={event =>
+                this.setState(
+                  updateByPropertyName("username", event.target.value)
+                )
+              }
+              type="text"
+              placeholder="Full Name"
+            />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label className="col-sm-2 col-form-label">Email ID</label>
+          <div className="col-sm-10">
+            <input
+              className="form-control"
+              value={email}
+              onChange={event =>
+                this.setState(updateByPropertyName("email", event.target.value))
+              }
+              type="text"
+              placeholder="emailaddress@domain.com"
+            />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label className="col-sm-2 col-form-label">Password</label>
+          <div className="col-sm-10">
+            <input
+              className="form-control"
+              value={passwordOne}
+              onChange={event =>
+                this.setState(
+                  updateByPropertyName("passwordOne", event.target.value)
+                )
+              }
+              type="password"
+              placeholder="Password"
+            />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label className="col-sm-2 col-form-label">Confirm Password</label>
+          <div className="col-sm-10">
+            <input
+              className="form-control"
+              value={passwordTwo}
+              onChange={event =>
+                this.setState(
+                  updateByPropertyName("passwordTwo", event.target.value)
+                )
+              }
+              type="password"
+              placeholder="Confirm Password"
+            />
+          </div>
+        </div>
+        <button
+          className="btn btn-success btn-lg btn-block"
+          disabled={isInvalid}
+          type="submit"
+        >
           Sign Up
         </button>
 
-        { error && <p>{error.message}</p> }
+        {error && <p>{error.message}</p>}
       </form>
     );
   }
 }
 
-const SignUpLink = () =>
+const SignUpLink = () => (
   <p>
-    Don't have an account?
-    {' '}
-    <Link to={routes.SIGN_UP}>Sign Up</Link>
+    Don't have an account? <Link to={routes.SIGN_UP}>Sign Up</Link>
   </p>
+);
 
 export default withRouter(SignUpPage);
 
-export {
-  SignUpForm,
-  SignUpLink,
-};
+export { SignUpForm, SignUpLink };

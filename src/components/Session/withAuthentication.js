@@ -1,9 +1,9 @@
-import React from 'react';
-import { inject } from 'mobx-react';
+import React from "react";
+import { inject } from "mobx-react";
 
-import { firebase } from '../../firebase';
+import { firebase } from "../../firebase";
 
-const withAuthentication = (Component) => {
+const withAuthentication = Component => {
   class WithAuthentication extends React.Component {
     componentDidMount() {
       const { sessionStore } = this.props;
@@ -16,13 +16,11 @@ const withAuthentication = (Component) => {
     }
 
     render() {
-      return (
-        <Component />
-      );
+      return <Component />;
     }
   }
 
-  return inject('sessionStore')(WithAuthentication);
-}
+  return inject("sessionStore")(WithAuthentication);
+};
 
 export default withAuthentication;

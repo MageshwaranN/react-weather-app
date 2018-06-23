@@ -1,4 +1,4 @@
-import { decorate, observable, action } from 'mobx';
+import { decorate, observable, action } from "mobx";
 
 class UserStore {
   users = {};
@@ -9,7 +9,7 @@ class UserStore {
 
   setUsers = users => {
     this.users = users;
-  }
+  };
 }
 
 decorate(UserStore, {

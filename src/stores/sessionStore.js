@@ -1,4 +1,4 @@
-import { decorate, observable, action } from 'mobx';
+import { decorate, observable, action } from "mobx";
 
 class SessionStore {
   authUser = null;
@@ -9,7 +9,7 @@ class SessionStore {
 
   setAuthUser = authUser => {
     this.authUser = authUser;
-  }
+  };
 }
 
 decorate(SessionStore, {

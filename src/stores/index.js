@@ -1,7 +1,7 @@
-import { configure } from 'mobx';
+import { configure } from "mobx";
 
-import SessionStore from './sessionStore';
-import UserStore from './userStore';
+import SessionStore from "./sessionStore";
+import UserStore from "./userStore";
 
 configure({ enforceActions: true });
 
